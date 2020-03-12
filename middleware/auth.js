@@ -1,6 +1,6 @@
 const jsonWebToken = require('jsonwebtoken')
 
-module.exports = function (req, res, next) {
+function auth (req, res, next) {
   const token = req.header('token')
 
   if (!token) return res.status(401).json({ message: 'Auth Error' })
@@ -14,3 +14,5 @@ module.exports = function (req, res, next) {
     res.status(500).send({ message: 'Invalid token' })
   }
 }
+
+module.exports = auth
