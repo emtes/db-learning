@@ -1,4 +1,3 @@
-// give token to route that will return all transactions
 window.addEventListener('load', async (e) => {
 	const transactionsInit = {
 		method: 'POST',
