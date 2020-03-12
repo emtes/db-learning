@@ -94,7 +94,7 @@ const paintPortfolio = async (tableBodyId) => {
     }
     const priceDat = document.createElement('td')
     priceDat.innerText = 'Loading..'
-    priceDat.setAttribute('class', 'currentPrice')
+    priceDat.setAttribute('id', cleanStockData[i].ticker)
     row.appendChild(priceDat)
     tableBody.appendChild(row)
   }
