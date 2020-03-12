@@ -1,0 +1,18 @@
+<%- include('header') -%>
+<main>
+  <section class="form">
+    <form>
+      <fieldset>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+
+        <input type="submit" value="Log In" class="button-primary" formmethod="post" formaction="/user/log-in">
+      </fieldset>
+    </form>
+  </section>
+</main>
+<script type="text/javascript" src="javascripts/login.js"></script>
+<%- include('footer') -%>
