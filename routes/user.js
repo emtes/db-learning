@@ -8,14 +8,14 @@ const User = require('../models/User')
 
 router.post(
   '/sign-up',
-  [check('email').isEmail(), check('password').isLength({ min: 6 })],
+  [check('email').isEmail(), check('password').isLength({ min: 4 })],
   async (req, res) => {
     const validationErrors = validationResult(req)
     if (!validationErrors.isEmpty()) {
       return res.status(400).json({ errors: validationErrors.array() })
     }
 
-    const { email, password, firstName } = req.body
+    const { name, email, password, address } = req.body
 
     try {
       let user = await User.findOne({ email })
@@ -23,9 +23,11 @@ router.post(
         return res.status(400).json({ msg: 'User already exists!' })
       }
       user = new User({
+        name,
         email,
         password,
-        firstName
+        address,
+        balance: 5000
       })
 
       const salt = await bcrypt.genSalt(10)
@@ -65,6 +67,7 @@ router.post(
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
+    console.log(req.body)
     const validationErrors = validationResult(req)
     if (!validationErrors.isEmpty()) {
       return res.status(400).json({ errors: validationErrors.array() })
@@ -102,13 +105,14 @@ router.post(
 
 const auth = require('../middleware/auth')
 
-router.get('/me', auth, async (req, res) => {
+router.get('/bal', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
-    res.json(user)
+    res.json(user.balance)
   } catch (err) {
     res.send({ message: 'Error fetching user.' })
   }
 })
+
 
 module.exports = router
