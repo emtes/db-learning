@@ -8,14 +8,6 @@ const Transaction = require('../models/Transaction');
 const Stock = require('../models/Stock');
 
 router.post('/', auth, async (req, res) => {
-  /*
-	Headers: Authorization: token
-	Body:
-	{
-		ticker: String, : must be valid
-		shares: Number,
-	}
-*/
   // make purchase, refer to user balance
   const buyingTicker = req.body.ticker.toUpperCase();
   const buyingShares = req.body.shares;
@@ -39,7 +31,6 @@ router.post('/', auth, async (req, res) => {
     res.send({ message: 'Error fetching user.' });
   }
 
-  // create transaction history, id, ticker, amount, date
   Transaction.create({
     user_id: req.user.id,
     ticker: buyingTicker,
@@ -52,7 +43,6 @@ router.post('/', auth, async (req, res) => {
     ticker: buyingTicker,
   })
     .then(async (stock) => {
-      console.log('stock after find:', stock);
       if (stock.length !== 0) {
         const doc = await Stock.findById(stock[0]._id);
         doc.quantity += Number(buyingShares);
