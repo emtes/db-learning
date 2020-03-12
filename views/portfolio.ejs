@@ -1,5 +1,6 @@
 <%- include('header') -%>
 <main>
+  <h1>Balance: $<span id="uiBalance"></span> USD</h1>
   <section class="form">
     <form>
       <fieldset>
@@ -7,11 +8,12 @@
         <input type="text" name="ticker" id="tickerInput">
 
         <label for="sharesInput">Shares</label>
-        <input type="number" name="shares" id="sharesInput">
+        <input type="number" name="shares" id="sharesInput" min="1" max="10">
 
         <input type="submit" value="Buy Shares" class="button-primary">
       </fieldset>
     </form>
   </section>
 </main>
+<script type="text/javascript" src="javascripts/portfolio.js"></script>
 <%- include('footer') -%>
