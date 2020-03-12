@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const user = require('./routes/user');
 const buy = require('./routes/buy');
 const transactions = require('./routes/transactions');
+const auth = require('./middleware/auth')
 const app = express();
 const port = 3000;
 
@@ -30,7 +31,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.render('portfolio');
+  res.render('signup');
 });
 
 app.use('/user', user); 
@@ -44,6 +45,10 @@ app.get('/log-in', (req, res) => {
 app.get('/sign-up', (req, res) => {
   res.render('signup');
 });
+
+app.get('/portfolio', (req, res) => {
+  res.render('portfolio')
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}...`);
