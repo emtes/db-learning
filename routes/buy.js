@@ -1,40 +1,71 @@
-const express = require('express')
-const auth = require('../middleware/auth')
-const router = express.Router()
-const User = require('../models/User')
-const getTickerPrice = require('../src/iex')
+const express = require('express');
+const auth = require('../middleware/auth');
+
+const router = express.Router();
+const getTickerPrice = require('../src/iex');
+const User = require('../models/User');
+const Transaction = require('../models/Transaction');
+const Stock = require('../models/Stock');
 
 router.post('/', auth, async (req, res) => {
-	/*
-		Headers: Authorization: token
-		Body:
-		{	
-			ticker: String, : must be valid
-			shares: Number,
-		}
-	*/
+  /*
+	Headers: Authorization: token
+	Body:
+	{
+		ticker: String, : must be valid
+		shares: Number,
+	}
+*/
+  // make purchase, refer to user balance
+  const buyingTicker = req.body.ticker.toUpperCase();
+  const buyingShares = req.body.shares;
+  const purchaseTotal = (await getTickerPrice(buyingTicker)) * buyingShares;
   try {
-  	// console.log(req.user)
-    const user = await User.findById(req.user.id)
-    let userBalance = user.balance
-    const buyingTicker = req.body.ticker
-    const buyingShares = req.body.shares
+    const user = await User.findById(req.user.id);
+    const userBalance = user.balance;
 
-    const purchaseTotal = await getTickerPrice(buyingTicker) * buyingShares
-    const netPrice = userBalance - purchaseTotal
+
+    const netPrice = userBalance - purchaseTotal;
 
     if (netPrice > 0) {
-    	user.balance = netPrice
-      await user.save()
-    	res.status(200)
+      user.balance = netPrice;
+      await user.save();
+      res.status(200);
     } else if (netPrice < 0) {
-    	res.json({message: 'Insufficient funds.'})
+      res.json({ message: 'Insufficient funds.' });
     }
-    
   } catch (err) {
-    console.error(err)
-    res.send({message: 'Error fetching user.'})
+    console.error(err);
+    res.send({ message: 'Error fetching user.' });
   }
-})
 
-module.exports = router
+  // create transaction history, id, ticker, amount, date
+  Transaction.create({
+    user_id: req.user.id,
+    ticker: buyingTicker,
+    quantity: buyingShares,
+    cost: purchaseTotal,
+    date: Date.now(),
+  });
+  Stock.find({
+    user_id: req.user.id,
+    ticker: buyingTicker,
+  })
+    .then(async (stock) => {
+      console.log('stock after find:', stock);
+      if (stock.length !== 0) {
+        const doc = await Stock.findById(stock[0]._id);
+        doc.quantity += Number(buyingShares);
+        await doc.save();
+      } else {
+        return Stock.create({
+          user_id: req.user.id,
+          ticker: buyingTicker,
+          quantity: buyingShares,
+        });
+      }
+    })
+    .catch((err) => console.error('Error saving transaction', err));
+});
+
+module.exports = router;

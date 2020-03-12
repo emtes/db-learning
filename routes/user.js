@@ -1,61 +1,64 @@
-const express = require('express')
-const { check, validationResult } = require('express-validator')
-const bcrypt = require('bcryptjs')
-const jsonWebToken = require('jsonwebtoken')
-const router = express.Router()
+const express = require('express');
+const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jsonWebToken = require('jsonwebtoken');
 
-const User = require('../models/User')
+const router = express.Router();
+
+const User = require('../models/User');
 
 router.post(
   '/sign-up',
   [check('email').isEmail(), check('password').isLength({ min: 4 })],
   async (req, res) => {
-    const validationErrors = validationResult(req)
+    const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      return res.status(400).json({ errors: validationErrors.array() })
+      return res.status(400).json({ errors: validationErrors.array() });
     }
 
-    const { name, email, password, address } = req.body
+    const {
+      name, email, password, address,
+    } = req.body;
 
     try {
-      let user = await User.findOne({ email })
+      let user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: 'User already exists!' })
+        return res.status(400).json({ msg: 'User already exists!' });
       }
       user = new User({
         name,
         email,
         password,
         address,
-        balance: 5000
-      })
+        balance: 5000,
+      });
 
-      const salt = await bcrypt.genSalt(10)
-      user.password = await bcrypt.hash(password, salt)
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
 
-      await user.save()
+      await user.save();
 
       const payload = {
         user: {
-          id: user.id
-        }
-      }
+          id: user.id,
+        },
+      };
 
       jsonWebToken.sign(
         payload,
         'randomString',
         { expiresIn: 10000 },
         (err, token) => {
-          if (err) throw err
-          res.status(200).json({ token })
-        }
-      )
+          if (err) throw err;
+          res.status(200).json({ token });
+        },
+      );
     } catch (err) {
-      console.error(err)
-      res.status(500).send('Error saving user data')
+      console.error(err);
+      res.status(500).send('Error saving user data');
     }
-  }
-)
+  },
+);
 
 router.post(
   '/log-in',
@@ -63,56 +66,56 @@ router.post(
     check('email', 'Please enter a valid email!').isEmail(),
     check(
       'password',
-      'Please enter a password that is at least 6 characters in length!'
-    ).isLength({ min: 6 })
+      'Please enter a password that is at least 6 characters in length!',
+    ).isLength({ min: 6 }),
   ],
   async (req, res) => {
-    console.log(req.body)
-    const validationErrors = validationResult(req)
+    console.log(req.body);
+    const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      return res.status(400).json({ errors: validationErrors.array() })
+      return res.status(400).json({ errors: validationErrors.array() });
     }
 
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ email })
+      const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ message: 'User does not exist' })
+        return res.status(400).json({ message: 'User does not exist' });
       }
 
-      const isMatch = await bcrypt.compare(password, user.password)
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Incorrect password!' })
+        return res.status(400).json({ message: 'Incorrect password!' });
       }
-      const payload = { user: { id: user.id } }
+      const payload = { user: { id: user.id } };
       jsonWebToken.sign(
         payload,
         'secret',
         { expiresIn: 3600 },
         (err, token) => {
           if (!err) {
-            res.status(200).json({ token })
+            res.status(200).json({ token });
           }
-        }
-      )
+        },
+      );
     } catch (err) {
-      console.error(err)
-      res.status(500).json({ message: 'Internal Server Error' })
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
-  }
-)
+  },
+);
 
-const auth = require('../middleware/auth')
+const auth = require('../middleware/auth');
 
 router.get('/bal', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id)
-    res.json(user.balance)
+    const user = await User.findById(req.user.id);
+    res.json(user.balance);
   } catch (err) {
-    res.send({ message: 'Error fetching user.' })
+    res.send({ message: 'Error fetching user.' });
   }
-})
+});
 
 
-module.exports = router
+module.exports = router;
