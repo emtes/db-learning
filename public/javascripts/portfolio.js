@@ -61,3 +61,43 @@ async function isValidTicker(str) {
     return false;
   }
 }
+
+// Owned Stocks Updates
+const getUserStocks = async () => {
+  const stocksInit = {
+    method: 'POST',
+    headers: {
+      token: localStorage.getItem('token'),
+      'Content-Type': 'application/json',
+    },
+  };
+  const req = await fetch('/transactions/stocks', stocksInit)
+  const json = await req.json()
+  return json
+}
+
+const paintPortfolio = async (tableBodyId) => {
+  const stocksData = await getUserStocks()
+  const cleanStockData = stocksData.map(stock => {
+    return {
+      ticker: stock.ticker,
+      quantity: stock.quantity
+    }
+  })
+  const tableBody = document.getElementById(tableBodyId)
+  for (let i = 0; i < cleanStockData.length; i++) {
+    const row = document.createElement('tr')
+    for (const prop in cleanStockData[i]) {
+      const data = document.createElement('td')
+      data.innerText = cleanStockData[i][prop]
+      row.appendChild(data)
+    }
+    const priceDat = document.createElement('td')
+    priceDat.innerText = 'Loading..'
+    priceDat.setAttribute('class', 'currentPrice')
+    row.appendChild(priceDat)
+    tableBody.appendChild(row)
+  }
+}
+
+paintPortfolio('portfolio')
