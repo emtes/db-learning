@@ -27,7 +27,7 @@ router.post('/', auth, async (req, res) => {
 
     const netPrice = userBalance - purchaseTotal;
 
-    if (netPrice > 0) {
+    if (netPrice >= 0) {
       user.balance = netPrice;
       await user.save();
       res.status(200);
