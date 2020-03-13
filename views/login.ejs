@@ -1,5 +1,7 @@
+<%- include('documentHead') -%>
 <%- include('header') -%>
 <main>
+  <h4>Don't have an account yet? <a href="/sign-up">Sign up!</a></h4>
   <section class="form">
     <form>
       <fieldset>
@@ -9,10 +11,11 @@
         <label for="password">Password</label>
         <input type="password" name="password" id="password" required>
 
-        <input type="submit" value="Log In" class="button-primary" formmethod="post" formaction="/user/log-in">
+        <input type="submit" value="Log In" class="button-primary"
+        formmethod="#" formaction="#">
       </fieldset>
     </form>
   </section>
 </main>
 <script type="text/javascript" src="javascripts/login.js"></script>
-<%- include('footer') -%>
+<%- include('documentTail') -%>
