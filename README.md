@@ -5,7 +5,7 @@ This is web stock portfolio app running on an Express server and using mongoDB f
 **Additional technologies:**
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) for authorization
 - [bcrypt](https://www.npmjs.com/package/bcrypt) for password encryption
-- [EJS](https://www.npmjs.com/package/ejs) for templating
+- [EJS](https://www.npmjs.com/package/ejs) for templates
 - [Mongoosejs](https://mongoosejs.com/) for mongoDB document modeling
 
 How to use
@@ -18,6 +18,9 @@ How to use
 
 \* Database is cleared while under active development or when full
 
-Sources of Errors and Needed Improvements
----
-`src/mongodb.js`: What happens when we can't connect to database? How can this catch statement be more useful?
+**Sources of Errors and Needed Improvements:**
++ `src/mongodb.js`: What happens when we can't connect to database? How can this catch statement be more useful?
+
++ `routes/user.js`: Most input validation enabled by HTML components. Could set up to match, but like this the effort to change the rules is reduced.
+
++ `routes/user.js`: Token expiration time is arbitrary. A log out feature would be cool.
