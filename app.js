@@ -1,4 +1,4 @@
-if (NODE_ENV === 'development') require('dotenv').config();
+// if (NODE_ENV === 'development') require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
