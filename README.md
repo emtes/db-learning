@@ -15,3 +15,4 @@ How to use
 3. In your browser, open `http://localhost:3000/`
 
 \* Use navigation links to change pages
+\* DB connection can be slow
