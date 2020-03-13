@@ -3,9 +3,9 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 const getTickerPrice = require('../src/iex');
-const User = require('../models/User');
-const Transaction = require('../models/Transaction');
-const Stock = require('../models/Stock');
+const User = require('../models/user');
+const Transaction = require('../models/transaction');
+const Stock = require('../models/stock');
 
 router.post('/', auth, async (req, res) => {
   // make purchase, refer to user balance
