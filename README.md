@@ -15,4 +15,9 @@ How to use
 3. In your browser, open `http://localhost:3000/`
 
 \* Use navigation links to change pages
-\* DB connection can be slow
+
+\* Database connection can be slow
+
+Sources of Errors and Needed Improvements
+---
+`src/mongodb.js`: What happens when we can't connect to database? How can this catch statement be more useful?
