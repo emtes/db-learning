@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const stockSchema = new Schema({
-  user_id: {
+  userId: {
     type: String,
     required: true,
   },
@@ -17,6 +17,6 @@ const stockSchema = new Schema({
   },
 });
 
-const Stock = mongoose.model('Stock', stockSchema);
+const stock = mongoose.model('Stock', stockSchema);
 
-module.exports = Stock;
+module.exports = stock;
