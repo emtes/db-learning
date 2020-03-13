@@ -14,9 +14,9 @@ How to use
 2. Run `npm start` or `node app.js`
 3. In your browser, open `http://localhost:3000/`
 
-\* Use navigation links to change pages
-
 \* Database connection can be slow
+
+\* Database is cleared while under active development or when full
 
 Sources of Errors and Needed Improvements
 ---
