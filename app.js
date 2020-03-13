@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 const initMongoDB = async () => {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}${process.env.DB_HOST}`,
+      `mongodb+srv://enmanuel:cd%25%25in07@cluster0-ohfo7.mongodb.net/test?retryWrites=true&w=majority`,
       { useNewUrlParser: true, useUnifiedTopology: true },
     );
     console.log('Connected to mongoDB cluster!');
