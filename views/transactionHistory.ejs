@@ -1,11 +1,14 @@
+<%- include('documentHead') -%>
 <%- include('header') -%>
 <main>
+	<h2>Transaction History</h2>
 	<table>
 		<thead>
 			<tr>
 				<th>Ticker</th>
-				<th>Quantity</th>
-				<th>Cost</th>
+				<th>Share Price</th>
+				<th>Amount Bought</th>
+				<th>Total Cost</th>
 				<th>Date and Time</th>
 			</tr>
 		</thead>
@@ -14,3 +17,4 @@
 </main>
 <script type="text/javascript" src="javascripts/transactionHistory.js"></script>
 <%- include('footer') -%>
+<%- include('documentTail') -%>
