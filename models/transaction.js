@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const transactionSchema = new Schema({
-  user_id: {
+  userId: {
     type: String,
     required: true,
   },
@@ -11,13 +11,17 @@ const transactionSchema = new Schema({
     type: String,
     required: true,
   },
+  sharePrice: {
+    type: Number,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,
   },
-  cost: {
+  purchaseTotal: {
     type: Number,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
@@ -25,6 +29,6 @@ const transactionSchema = new Schema({
   },
 });
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+const transaction = mongoose.model('transaction', transactionSchema);
 
-module.exports = Transaction;
+module.exports = transaction;
