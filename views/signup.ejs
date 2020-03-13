@@ -1,6 +1,6 @@
+<%- include('documentHead') -%>
 <%- include('header') -%>
 <main>
-  <section class="form">
     <form>
       <fieldset>
         <label for="name">Name</label>
@@ -15,10 +15,10 @@
         <label for="address">Address</label>
         <input type="text" name="address" id="address">
 
-        <input type="submit" value="Sign Up" class="button-primary" formmethod="post" formaction="/test">
+        <input type="submit" value="Sign Up" class="button-primary"
+        formmethod="#" formaction="#">
       </fieldset>
     </form>
-  </section>
 </main>
 <script type="text/javascript" src="javascripts/signup.js"></script>
-<%- include('footer') -%>
+<%- include('documentTail') -%>
