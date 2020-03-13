@@ -1,29 +1,34 @@
 const express = require('express');
-const router = express.Router()
 const auth = require('../middleware/auth');
-const Transactions = require('../models/Transaction');
-const Stocks = require('../models/Stock')
+const transaction = require('../models/transaction');
+const stock = require('../models/stock');
 
-router.get('/', (req, res) => {
-	res.render('transactionHistory')
-})
+const router = express.Router();
+
+router.get('/', auth, (req, res) => {
+  try {
+    res.render('transactionHistory');
+  } catch (err) {
+    res.redirect('/log-in');
+  }
+});
 
 router.post('/', auth, async (req, res) => {
-	try {
-		const transactions = await Transactions.find({user_id: req.user.id});
-		res.send(transactions) 
-	} catch (err) {
-		console.error('Error fetching transactions.',err)
-	}
+  try {
+    const transactions = await transaction.find({ userId: req.user.id });
+    res.send(transactions);
+  } catch (err) {
+    res.redirect('/log-in');
+  }
 });
 
 router.post('/stocks', auth, async (req, res) => {
-	try {
-		const stocks = await Stocks.find({user_id: req.user.id})
-		res.send(stocks)
-	} catch (err) {
-		console.error('Error fetching stock data.', err)
-	}
-})
+  try {
+    const stocks = await stock.find({ userId: req.user.id });
+    res.send(stocks);
+  } catch (err) {
+    res.redirect('/log-in');
+  }
+});
 
 module.exports = router;
