@@ -11,12 +11,12 @@ const stockSchema = new Schema({
     type: String,
     required: true,
   },
-  quantity: {
+  sharesOwned: {
     type: Number,
     required: true,
   },
 });
 
-const stock = mongoose.model('Stock', stockSchema);
+const stock = mongoose.model('stock', stockSchema);
 
 module.exports = stock;
