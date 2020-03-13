@@ -23,6 +23,7 @@
 - Utilities
 - Clearing
 - Media Queries
+- User Styles
 */
 
 
@@ -416,3 +417,35 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+/* User Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+header {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+nav li {
+  margin: 0 5px;
+}
+
+nav .button {
+  margin: 0;
+}
