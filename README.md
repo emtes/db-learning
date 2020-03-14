@@ -19,6 +19,8 @@ How to use
 \* Database is cleared while under active development or when full
 
 **Sources of Errors and Needed Improvements:**
++ I have status codes be part of the response in most endpoints but little to no code makes use of them in the front end. Could go a long way.
+
 + `src/mongodb.js`: What happens when we can't connect to database? How can this catch statement be more useful?
 
 + `routes/user.js`: Most input validation enabled by HTML components. Could set up to match, but like this the effort to change the rules is reduced.
