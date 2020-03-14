@@ -24,3 +24,5 @@ How to use
 + `routes/user.js`: Most input validation enabled by HTML components. Could set up to match, but like this the effort to change the rules is reduced.
 
 + `routes/user.js`: Token expiration time is arbitrary. A log out feature would be cool.
+
++ `public/javascripts/signup`: Error handling for when request to sign up endpoint isn't successful
