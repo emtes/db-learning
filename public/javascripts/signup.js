@@ -8,7 +8,6 @@ form.addEventListener('submit', (e) => {
     password: form.password.value,
     address: form.address.value,
   };
-  console.log(JSON.stringify(signupDat));
   fetch('/user/sign-up', {
     method: 'POST',
     headers: {
@@ -17,5 +16,9 @@ form.addEventListener('submit', (e) => {
     body: JSON.stringify(signupDat),
   })
     .then((res) => res.json())
-    .then();
+    .then(
+      setTimeout(() => {
+        window.location = '/';
+      }, 1000),
+    );
 });
