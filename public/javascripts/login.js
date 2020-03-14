@@ -6,7 +6,6 @@ form.addEventListener('submit', (e) => {
     email: form.email.value,
     password: form.password.value,
   };
-  console.log(JSON.stringify(loginDat));
   fetch('/user/log-in', {
     method: 'POST',
     headers: {
@@ -16,13 +15,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      const { token } = json; // look at json, take key 'token', assign to var 'token'
-
+      const { token } = json;
       localStorage.setItem('token', token);
-      console.log('before:', localStorage.getItem('token'));
       setTimeout(() => {
         window.location = '/';
-        console.log('after', localStorage.getItem('token'));
-      }, 5000);
+      }, 1000);
     });
 });
