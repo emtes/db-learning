@@ -5,7 +5,7 @@ const stock = require('../models/stock');
 
 const router = express.Router();
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
   try {
     res.render('transactionHistory');
   } catch (err) {

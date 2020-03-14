@@ -15,7 +15,7 @@ router.get('/sign-up', (req, res) => {
   res.render('signup');
 });
 
-router.get('/portfolio', auth, (req, res) => {
+router.get('/portfolio', (req, res) => {
   try { res.render('portfolio'); } catch (err) {
     res.redirect('/log-in');
   }
